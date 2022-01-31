@@ -1,6 +1,6 @@
 import random 
 
-def difficulty_lvl():
+def ask_for_difficulty_lvl():
     difficulty_list = ['EASY', 'MEDIUM', 'HARD']
     while True:
         difficulty_inp = input(f'Choose difficulty level from the list: {difficulty_list} ').upper()
@@ -44,6 +44,15 @@ difficulty = "1" # sample data, normally the user should choose the difficulty
 word_to_guess = "Cairo" # sample data, normally the word should be chosen from the countries-and-capitals.txt
 lives = 5 # sample data, normally the lives should be chosen based on the difficulty
 
+
+# otwieranie pliku txt
+f = open("countries-and-capitals.txt", "r")
+lines = f.readlines()
+result = []
+for x in lines:
+    result.append(x.split(' ')[0])
+print(result)
+f.close()
 
 
 
@@ -89,11 +98,9 @@ already_tried_letters = [] # this list will contain all the tried letters
 
 
 def game_start():
-    a = difficulty_lvl()
-    
-
-
+    a = ask_for_difficulty_lvl()
+       
 
 if __name__ == "__main__":
-      game_start()
+    game_start()
 
