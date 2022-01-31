@@ -53,3 +53,5 @@ already_tried_letters = [] # this list will contain all the tried letters
 # If neither of the 2 conditions mentioned above go back to STEP 4
 
 
+if __name__ == "__main__":
+    pass
