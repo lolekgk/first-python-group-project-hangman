@@ -1,11 +1,11 @@
 import random 
 
-def difficulty_lvl():
+def ask_for_difficulty_lvl():
     difficulty_list = ['EASY', 'MEDIUM', 'HARD']
     while True:
         difficulty_inp = input(f'Choose difficulty level from the list: {difficulty_list} ').upper()
         if difficulty_inp in difficulty_list:
-            return difficulty_inp
+            return number_of_lives(difficulty_inp)
 
 # PART 1
 # display a menu with at least 3 difficulty choices and ask the user
@@ -22,7 +22,7 @@ lives = 5 # sample data, normally the lives should be chosen based on the diffic
 def number_of_lives(difficulty_inp):
     if difficulty_inp == "EASY":
         lives = 14
-        word_to_guess = "AAA"
+        return print(word_to_guess = "AAA")
     elif difficulty_inp == "MEDIUM":
         lives = 12
         word_to_guess = "AAABBB"
@@ -30,6 +30,14 @@ def number_of_lives(difficulty_inp):
         lives = 10
         word_to_guess = "AAABBBCCC"
         
+# otwieranie pliku txt
+f = open("countries-and-capitals.txt", "r")
+lines = f.readlines()
+result = []
+for x in lines:
+    result.append(x.split(' ')[0])
+print(result)
+f.close()
 
 
 # STEP 3
@@ -74,10 +82,8 @@ already_tried_letters = [] # this list will contain all the tried letters
 
 
 def game_start():
-    a = difficulty_lvl()
+    a = ask_for_difficulty_lvl()
+       
 
-
-# if __name__ == "__main__":
-#     start = game_start()
-
-difficulty_lvl()
+if __name__ == "__main__":
+    game_start()
