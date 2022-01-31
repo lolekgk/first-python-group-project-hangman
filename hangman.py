@@ -5,8 +5,33 @@ def difficulty_lvl():
     while True:
         difficulty_inp = input(f'Choose difficulty level from the list: {difficulty_list} ').upper()
         if difficulty_inp in difficulty_list:
-            return difficulty_inp
+            return number_of_lives(difficulty_inp)
 
+
+def number_of_lives(difficulty_inp):
+    if difficulty_inp == "EASY":
+        lives = 14
+        word_to_guess = "AAA"
+        print("You choose EASY level with 14 lives")
+        return lives and word_to_guess
+    elif difficulty_inp == "MEDIUM":
+        lives = 12
+        word_to_guess = "AAABBB"
+        print("You choose MEDIUM level with 12 lives")
+        return lives and word_to_guess
+    elif difficulty_inp == "HARD":
+        lives = 10
+        word_to_guess = "AAABBBCCC"
+        print("You choose HARD level with 10 lives")
+        return lives and word_to_guess
+        
+
+def word_dashed(word_to_guess):
+    numbers_of_letter = len(word_to_guess)
+    dashed = ("_ " * numbers_of_letter)
+    return dashed
+    
+            
 # PART 1
 # display a menu with at least 3 difficulty choices and ask the user
 # to select the desired level
@@ -19,17 +44,7 @@ difficulty = "1" # sample data, normally the user should choose the difficulty
 word_to_guess = "Cairo" # sample data, normally the word should be chosen from the countries-and-capitals.txt
 lives = 5 # sample data, normally the lives should be chosen based on the difficulty
 
-def number_of_lives(difficulty_inp):
-    if difficulty_inp == "EASY":
-        lives = 14
-        word_to_guess = "AAA"
-    elif difficulty_inp == "MEDIUM":
-        lives = 12
-        word_to_guess = "AAABBB"
-    elif difficulty_inp == "HARD":
-        lives = 10
-        word_to_guess = "AAABBBCCC"
-        
+
 
 
 # STEP 3
@@ -75,9 +90,10 @@ already_tried_letters = [] # this list will contain all the tried letters
 
 def game_start():
     a = difficulty_lvl()
+    
 
 
-# if __name__ == "__main__":
-#     start = game_start()
 
-difficulty_lvl()
+if __name__ == "__main__":
+      game_start()
+
