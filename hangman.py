@@ -1,4 +1,12 @@
 import random 
+
+def difficulty_lvl():
+    difficulty_list = ['EASY', 'MEDIUM', 'HARD']
+    while True:
+        difficulty_inp = input(f'Choose difficulty level from the list: {difficulty_list} ').upper()
+        if difficulty_inp in difficulty_list:
+            return difficulty_inp
+
 # PART 1
 # display a menu with at least 3 difficulty choices and ask the user
 # to select the desired level
@@ -66,8 +74,10 @@ already_tried_letters = [] # this list will contain all the tried letters
 
 
 def game_start():
-    pass
+    a = difficulty_lvl()
 
 
-if __name__ == "__main__":
-    start = game_start()
+# if __name__ == "__main__":
+#     start = game_start()
+
+difficulty_lvl()
