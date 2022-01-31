@@ -1,4 +1,5 @@
 import random 
+import requests
 
 def ask_for_difficulty_lvl():
     difficulty_list = ['EASY', 'MEDIUM', 'HARD']
@@ -35,7 +36,7 @@ def word_dashed(word_to_guess):
 # PART 1
 # display a menu with at least 3 difficulty choices and ask the user
 # to select the desired level
-difficulty = "1" # sample data, normally the user should choose the difficulty
+# sample data, normally the user should choose the difficulty
 
 
 # STEP 2
@@ -45,14 +46,16 @@ word_to_guess = "Cairo" # sample data, normally the word should be chosen from t
 lives = 5 # sample data, normally the lives should be chosen based on the difficulty
 
 
-# otwieranie pliku txt
-f = open("countries-and-capitals.txt", "r")
-lines = f.readlines()
-result = []
-for x in lines:
-    result.append(x.split(' ')[0])
-print(result)
-f.close()
+# funkcja otwiera plik txt, tworzy listę z 1 kolumny oraz zwraca jedną losową wartość z tej listy
+def draw_a_word():
+    f = open("countries-and-capitals.txt", "r")
+    lines = f.readlines()
+    result = []
+    for x in lines:
+        words_list = result.append(x.split(' ')[0])
+    word_to_guess = random.choice(result)
+    f.close()
+    return word_to_guess
 
 
 
@@ -98,7 +101,14 @@ already_tried_letters = [] # this list will contain all the tried letters
 
 
 def game_start():
-    a = ask_for_difficulty_lvl()
+    game_menu = "Welcome to Hangman"
+    r = requests.get(f'http://artii.herokuapp.com/make?text={game_menu}')
+    print(r.text)
+    secret_word = draw_a_word()
+    difficulty = ask_for_difficulty_lvl() #pozniej mozna dodac, ze po zgadnieciu slowa znowu wybieramy poziom trudnosci
+    # lives = xxx
+    # l = requests.get(f'http://artii.herokuapp.com/make?text={lives')
+
        
 
 if __name__ == "__main__":
