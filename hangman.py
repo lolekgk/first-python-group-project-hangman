@@ -11,6 +11,18 @@ difficulty = "1" # sample data, normally the user should choose the difficulty
 word_to_guess = "Cairo" # sample data, normally the word should be chosen from the countries-and-capitals.txt
 lives = 5 # sample data, normally the lives should be chosen based on the difficulty
 
+def number_of_lives(difficulty_inp):
+    if difficulty_inp == "EASY":
+        lives = 14
+        word_to_guess = "AAA"
+    elif difficulty_inp == "MEDIUM":
+        lives = 12
+        word_to_guess = "AAABBB"
+    elif difficulty_inp == "HARD":
+        lives = 10
+        word_to_guess = "AAABBBCCC"
+        
+
 
 # STEP 3
 # display the chosen word to guess with all letters replaced by "_"
