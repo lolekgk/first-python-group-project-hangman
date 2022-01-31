@@ -1,3 +1,4 @@
+import random 
 # PART 1
 # display a menu with at least 3 difficulty choices and ask the user
 # to select the desired level
@@ -50,3 +51,5 @@ already_tried_letters = [] # this list will contain all the tried letters
 # If you still have letters that are not guessed check if you have a non negative amount of lives
 # left. If not print a loosing message and exit the app.
 # If neither of the 2 conditions mentioned above go back to STEP 4
+
+
