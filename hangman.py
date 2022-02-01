@@ -36,7 +36,7 @@ def word_dashed(word_to_guess):
             word_list_two.append(i.replace(i, "_")) 
         else:
             word_list_two.append(i)
-    return " ".join(word_list_two)
+    return print(" ".join(word_list_two))
     
             
 # PART 1 zrobione
@@ -61,7 +61,6 @@ def draw_a_word(difficulty_inp):
     for x in lines:
         result.append(x.split('|')[0])
    # w miejsce | wstawiany jest przecinek
-    pprint(result[:25])
     if difficulty_inp == "EASY":
         word_to_guess = random.choice(result[:25])
         print(word_to_guess)
@@ -73,7 +72,6 @@ def draw_a_word(difficulty_inp):
         word_to_guess = random.choice(result)
         return word_to_guess
 
-draw_a_word("EASY")
 # STEP 3 zrobione
 # display the chosen word to guess with all letters replaced by "_"
 # for example instead of "Cairo" display "_ _ _ _ _"
@@ -94,18 +92,19 @@ def is_a_letter(letter):
         else:
             return False
 
-def ask_for_a_letter(tried_letters):
+def ask_for_a_letter():
     while True:
         letter = input('Please provide a letter: ')
         if is_a_letter(letter):
             if letter.upper() == 'QUIT':
-                return None
+                return print(None)
             else:
                 #w tym przypadku następuje wybor dobrej litery - trzeba dodac co zwraca
                 #np dodanie do pustego zbioru itp
                 pass
-                return letter
+                #return letter
         else:
+            print(f"Wrong you provied '{letter}'! You need to provide one letter!")
             break
     
     
@@ -152,13 +151,14 @@ def game_start():
         secret_word = draw_a_word(difficulty)
         lives = number_of_lives(difficulty)
         dash = word_dashed(secret_word)
+        a = ask_for_a_letter()
         # wy przypadku, gdy dlugosc slowa wybranego przez program nie jest podanemu przez nas
         #bedziemy wciaz pytani o slowo
         # while len(secret_word) != len(users_word):
         #     ask = ask_for_a_letter(already_tried_letters)
 
         #konczymy dzialanie programu w przypadku podania quit - funkcja zwraca wtedy none == false
-        if ask_for_a_letter == False:
+        if a == False:
             break
 
     # lives = xxx
@@ -166,5 +166,5 @@ def game_start():
 
        
 
-# if __name__ == "__main__":
-#     game_start()
+if __name__ == "__main__":
+    game_start()
