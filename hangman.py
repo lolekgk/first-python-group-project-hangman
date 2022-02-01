@@ -10,35 +10,33 @@ def ask_for_difficulty_lvl():
             return difficulty_inp
 
 
+
 def number_of_lives(difficulty_inp):
     if difficulty_inp == "EASY":
         lives = 14
-        word_to_guess = "AAA"
         print("You choose EASY level with 14 lives")
-        return lives and word_to_guess
+        return lives
     elif difficulty_inp == "MEDIUM":
         lives = 12
-        word_to_guess = "AAABBB"
         print("You choose MEDIUM level with 12 lives")
-        return lives and word_to_guess
+        return lives
     elif difficulty_inp == "HARD":
         lives = 10
-        word_to_guess = "AAABBBCCC"
         print("You choose HARD level with 10 lives")
-        return lives and word_to_guess
+        return lives
         
 # strip rozdziela kazda litere slowa
 def word_dashed(word_to_guess):
     word_list = list(word_to_guess.strip(""))
-    word_list_two = []
+    word_list_encode = []
     for i in word_list:
         if i.isalpha():
-            word_list_two.append(i.replace(i, "_")) 
+            word_list_encode.append(i.replace(i, "_")) 
         else:
-            word_list_two.append(i)
-    return print(" ".join(word_list_two))
+            word_list_encode.append(i)
+    return print(" ".join(word_list_encode))
     
-            
+
 # PART 1 zrobione
 # display a menu with at least 3 difficulty choices and ask the user
 # to select the desired level
@@ -92,14 +90,19 @@ def is_a_letter(letter):
         else:
             return False
 
+already_tried_letters = []
+
 def ask_for_a_letter():
     while True:
         letter = input('Please provide a letter or type a quit if you want to exit: ')
         if is_a_letter(letter):
-                #w tym przypadku następuje wybor dobrej litery - trzeba dodac co zwraca
-                #np dodanie do pustego zbioru itp
-                pass
-                #return letter
+            if letter in already_tried_letters: #sprawdza czy letter jest w zbiorze już użytych liter, jeśli tak to zwraca że już ją użyto
+                print(f"You already used this letter: {letter}")
+            else:
+                already_tried_letters.append(letter) # jeśli litery nie użyto wcześniej, dodaje ją do listy already_tried_letters i zwraca całą listę
+                print("Already used letters: ", (" ".join(already_tried_letters)))
+                break
+
         elif letter.upper() == 'QUIT':
             print("Do zobaczenia!")
             break
@@ -109,14 +112,22 @@ def ask_for_a_letter():
     
     
 
-# STEP 5
+# STEP 5 zrobione
 # validate if the typed letter is already in the tried letters
 # HINT: search on the internet: `python if letter in list`
 # If it is not, than append to the tried letters
 # If it has already been typed, return to STEP 5. HINT: use a while loop here
 # already_tried_letters = [] # this list will contain all the tried letters
-
-
+def guessing(word_to_guess):
+    word_list = list(word_to_guess.strip("").lower())
+    word_list_encode = []
+    for i in word_list:
+        if i in already_tried_letters or not i.isalpha():
+            word_list_encode.append(i)
+        else:
+            word_list_encode.append(i.replace(i, "_"))
+    return print(" ".join(word_list_encode))
+        
 # STEP 6
 # if the letter is present in the word iterate through all the letters in the variable
 # word_to_guess. If that letter is present in the already_tried_letters then display it,
@@ -151,16 +162,19 @@ def game_start():
         secret_word = draw_a_word(difficulty)
         lives = number_of_lives(difficulty)
         dash = word_dashed(secret_word)
-        a = ask_for_a_letter()
+        while True: #pyta o literę a potem odpala funkcję guessing, która daną literkę wypisuje w haśle i potem pyta ponownie o literę / trzeba będzie przerwać gdy będzie całe hasło odgadnięte lub wszystkie stacone życia
+            a = ask_for_a_letter()
+            guessing(secret_word)
+            
         # wy przypadku, gdy dlugosc slowa wybranego przez program nie jest podanemu przez nas
         #bedziemy wciaz pytani o slowo
         # while len(secret_word) != len(users_word):
         #     ask = ask_for_a_letter(already_tried_letters)
-
+        
         #konczymy dzialanie programu w przypadku podania quit - funkcja zwraca wtedy none == false
-        if a == False:
-            break
-
+            if a == False:
+                break
+        break
     # lives = xxx
     # l = requests.get(f'http://artii.herokuapp.com/make?text={lives}')
 
