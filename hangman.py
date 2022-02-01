@@ -104,8 +104,10 @@ def ask_for_a_letter():
                 break
 
         elif letter.upper() == 'QUIT':
-            print("Do zobaczenia!")
-            break
+            end_game = "See you soon!"
+            eg = requests.get(f'http://artii.herokuapp.com/make?text={end_game}')
+            print(eg.text)
+            return None
         else:
             print(f"Wrong you provied '{letter}'! You need to provide one letter!")
             break
@@ -172,7 +174,7 @@ def game_start():
         #     ask = ask_for_a_letter(already_tried_letters)
         
         #konczymy dzialanie programu w przypadku podania quit - funkcja zwraca wtedy none == false
-            if a == False:
+            if not a:
                 break
         break
     # lives = xxx
