@@ -6,7 +6,7 @@ def ask_for_difficulty_lvl():
     while True:
         difficulty_inp = input(f'Choose difficulty level from the list: {difficulty_list} ').upper()
         if difficulty_inp in difficulty_list:
-            return number_of_lives(difficulty_inp)
+            return difficulty_inp
 
 
 def number_of_lives(difficulty_inp):
@@ -47,16 +47,24 @@ lives = 5 # sample data, normally the lives should be chosen based on the diffic
 
 
 # funkcja otwiera plik txt, tworzy listę z 1 kolumny oraz zwraca jedną losową wartość z tej listy
-def draw_a_word():
+#liczba państw to 183, pula musi być zalezna od poziomu trudnosci
+def draw_a_word(difficulty_inp):
     f = open("countries-and-capitals.txt", "r")
     lines = f.readlines()
     result = []
     for x in lines:
         words_list = result.append(x.split(' ')[0])
-    word_to_guess = random.choice(result)
     f.close()
-    return word_to_guess
 
+    if difficulty_inp == "EASY":
+        word_to_guess = random.choice(result[:25])
+        return print(word_to_guess + "l")
+    elif difficulty_inp == "MEDIUM":
+        word_to_guess = random.choice(result[:50])
+        return word_to_guess
+    else:
+        word_to_guess = random.choice(result)
+        return word_to_guess
 
 
 # STEP 3
@@ -69,7 +77,19 @@ def draw_a_word():
 # here you should validate if the typed letter is the word 
 # "quit", "Quit", "QUit", "QUIt", "QUIT", "QuIT"... you get the idea :)
 # HINT: use the upper() or lower() built-in Python functions
+def is_a_letter(letter):
+    try: 
+        int(letter)
+        return False
+    except ValueError:
+        return True
 
+def ask_for_a_letter():
+    while True:
+        letter = input('Please provide a letter: ')
+        if is_a_letter(letter):
+            pass
+    
 
 # STEP 5
 # validate if the typed letter is already in the tried letters
@@ -100,12 +120,12 @@ already_tried_letters = [] # this list will contain all the tried letters
 # If neither of the 2 conditions mentioned above go back to STEP 4
 
 
-def game_start():
+def game_start():   
     game_menu = "Welcome to Hangman"
     r = requests.get(f'http://artii.herokuapp.com/make?text={game_menu}')
     print(r.text)
-    secret_word = draw_a_word()
     difficulty = ask_for_difficulty_lvl() #pozniej mozna dodac, ze po zgadnieciu slowa znowu wybieramy poziom trudnosci
+    secret_word = draw_a_word(difficulty)
     # lives = xxx
     # l = requests.get(f'http://artii.herokuapp.com/make?text={lives')
 
