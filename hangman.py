@@ -87,13 +87,25 @@ def is_a_letter(letter):
         int(letter)
         return False
     except ValueError:
-        return True
+        if len(letter) == 1:
+            return True
+        else:
+            return False
 
-def ask_for_a_letter():
+def ask_for_a_letter(tried_letters):
     while True:
         letter = input('Please provide a letter: ')
         if is_a_letter(letter):
-            pass
+            if letter.upper() == 'QUIT':
+                return print(None)
+            else:
+                #w tym przypadku następuje wybor dobrej litery - trzeba dodac co zwraca
+                #np dodanie do pustego zbioru itp
+                pass
+                return print(letter)
+        else:
+            break
+    
     
 
 # STEP 5
@@ -125,17 +137,31 @@ already_tried_letters = [] # this list will contain all the tried letters
 # If neither of the 2 conditions mentioned above go back to STEP 4
 
 
-def game_start():   
-    game_menu = "Welcome to Hangman"
-    r = requests.get(f'http://artii.herokuapp.com/make?text={game_menu}')
-    print(r.text)
-    difficulty = ask_for_difficulty_lvl() #pozniej mozna dodac, ze po zgadnieciu slowa znowu wybieramy poziom trudnosci
-    secret_word = draw_a_word(difficulty)
+def game_start():  
+    while True: 
+        game_menu = "Welcome to Hangman"
+        r = requests.get(f'http://artii.herokuapp.com/make?text={game_menu}')
+        print(r.text)
+        # ten zbior nie wiem czy tutaj, czy w osobnej funkcji
+        #already_tried_letters = []
+        #to podobnie
+        #users_word = []
+        difficulty = ask_for_difficulty_lvl() #pozniej mozna dodac, ze po zgadnieciu slowa znowu wybieramy poziom trudnosci
+        secret_word = draw_a_word(difficulty)
+        lives = number_of_lives(difficulty)
+        # wy przypadku, gdy dlugosc slowa wybranego przez program nie jest podanemu przez nas
+        #bedziemy wciaz pytani o slowo
+        # while len(secret_word) != len(users_word):
+        #     ask = ask_for_a_letter(already_tried_letters)
+
+        #konczymy dzialanie programu w przypadku podania quit - funkcja zwraca wtedy none == false
+        if ask_for_a_letter == False:
+            break
+
     # lives = xxx
-    # l = requests.get(f'http://artii.herokuapp.com/make?text={lives')
+    # l = requests.get(f'http://artii.herokuapp.com/make?text={lives}')
 
        
 
-if __name__ == "__main__":
-    game_start()
-
+# if __name__ == "__main__":
+#     game_start()
