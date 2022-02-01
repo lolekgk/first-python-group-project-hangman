@@ -94,15 +94,15 @@ def is_a_letter(letter):
 
 def ask_for_a_letter():
     while True:
-        letter = input('Please provide a letter: ')
+        letter = input('Please provide a letter or type a quit if you want to exit: ')
         if is_a_letter(letter):
-            if letter.upper() == 'QUIT':
-                return print(None)
-            else:
                 #w tym przypadku następuje wybor dobrej litery - trzeba dodac co zwraca
                 #np dodanie do pustego zbioru itp
                 pass
                 #return letter
+        elif letter.upper() == 'QUIT':
+            print("Do zobaczenia!")
+            break
         else:
             print(f"Wrong you provied '{letter}'! You need to provide one letter!")
             break
