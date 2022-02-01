@@ -1,5 +1,6 @@
 import random 
 import requests
+from pprint import pprint
 
 def ask_for_difficulty_lvl():
     difficulty_list = ['EASY', 'MEDIUM', 'HARD']
@@ -26,7 +27,7 @@ def number_of_lives(difficulty_inp):
         print("You choose HARD level with 10 lives")
         return lives and word_to_guess
         
-
+# strip rozdziela kazda litere slowa
 def word_dashed(word_to_guess):
     word_list = list(word_to_guess.strip(""))
     word_list_two = []
@@ -38,17 +39,17 @@ def word_dashed(word_to_guess):
     return " ".join(word_list_two)
     
             
-# PART 1
+# PART 1 zrobione
 # display a menu with at least 3 difficulty choices and ask the user
 # to select the desired level
 # sample data, normally the user should choose the difficulty
 
 
-# STEP 2
+# STEP 2 zrobione
 # based on the chosen difficulty level, set the values 
 # for the player's lives
-word_to_guess = "Cairo" # sample data, normally the word should be chosen from the countries-and-capitals.txt
-lives = 5 # sample data, normally the lives should be chosen based on the difficulty
+# word_to_guess = "Cairo" # sample data, normally the word should be chosen from the countries-and-capitals.txt
+# lives = 5 # sample data, normally the lives should be chosen based on the difficulty
 
 
 # funkcja otwiera plik txt, tworzy listę z 1 kolumny oraz zwraca jedną losową wartość z tej listy
@@ -58,12 +59,13 @@ def draw_a_word(difficulty_inp):
     lines = f.readlines()
     result = []
     for x in lines:
-        words_list = result.append(x.split(' ')[0])
-    f.close()
-
+        result.append(x.split('|')[0])
+   # w miejsce | wstawiany jest przecinek
+    pprint(result[:25])
     if difficulty_inp == "EASY":
         word_to_guess = random.choice(result[:25])
-        return print(word_to_guess + "l")
+        print(word_to_guess)
+        return word_to_guess
     elif difficulty_inp == "MEDIUM":
         word_to_guess = random.choice(result[:50])
         return word_to_guess
@@ -71,13 +73,13 @@ def draw_a_word(difficulty_inp):
         word_to_guess = random.choice(result)
         return word_to_guess
 
-
-# STEP 3
+draw_a_word("EASY")
+# STEP 3 zrobione
 # display the chosen word to guess with all letters replaced by "_"
 # for example instead of "Cairo" display "_ _ _ _ _"
 
 
-# STEP 4
+# STEP 4 zrobione
 # ask the user to type a letter
 # here you should validate if the typed letter is the word 
 # "quit", "Quit", "QUit", "QUIt", "QUIT", "QuIT"... you get the idea :)
@@ -97,12 +99,12 @@ def ask_for_a_letter(tried_letters):
         letter = input('Please provide a letter: ')
         if is_a_letter(letter):
             if letter.upper() == 'QUIT':
-                return print(None)
+                return None
             else:
                 #w tym przypadku następuje wybor dobrej litery - trzeba dodac co zwraca
                 #np dodanie do pustego zbioru itp
                 pass
-                return print(letter)
+                return letter
         else:
             break
     
@@ -113,7 +115,7 @@ def ask_for_a_letter(tried_letters):
 # HINT: search on the internet: `python if letter in list`
 # If it is not, than append to the tried letters
 # If it has already been typed, return to STEP 5. HINT: use a while loop here
-already_tried_letters = [] # this list will contain all the tried letters
+# already_tried_letters = [] # this list will contain all the tried letters
 
 
 # STEP 6
@@ -149,6 +151,7 @@ def game_start():
         difficulty = ask_for_difficulty_lvl() #pozniej mozna dodac, ze po zgadnieciu slowa znowu wybieramy poziom trudnosci
         secret_word = draw_a_word(difficulty)
         lives = number_of_lives(difficulty)
+        dash = word_dashed(secret_word)
         # wy przypadku, gdy dlugosc slowa wybranego przez program nie jest podanemu przez nas
         #bedziemy wciaz pytani o slowo
         # while len(secret_word) != len(users_word):
