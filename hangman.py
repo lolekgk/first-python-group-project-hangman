@@ -152,22 +152,22 @@ def guessing(word_to_guess):
 
 
 def game_start():  
+    game_menu = "Welcome to Hangman"
+    r = requests.get(f'http://artii.herokuapp.com/make?text={game_menu}')
+    print(r.text)
+    difficulty = ask_for_difficulty_lvl() #pozniej mozna dodac, ze po zgadnieciu slowa znowu wybieramy poziom trudnosci
+    secret_word = draw_a_word(difficulty)
     while True: 
-        game_menu = "Welcome to Hangman"
-        r = requests.get(f'http://artii.herokuapp.com/make?text={game_menu}')
-        print(r.text)
         # ten zbior nie wiem czy tutaj, czy w osobnej funkcji
         #already_tried_letters = []
         #to podobnie
         #users_word = []
-        difficulty = ask_for_difficulty_lvl() #pozniej mozna dodac, ze po zgadnieciu slowa znowu wybieramy poziom trudnosci
-        secret_word = draw_a_word(difficulty)
+        
         lives = number_of_lives(difficulty)
         dash = word_dashed(secret_word)
         while True: #pyta o literę a potem odpala funkcję guessing, która daną literkę wypisuje w haśle i potem pyta ponownie o literę / trzeba będzie przerwać gdy będzie całe hasło odgadnięte lub wszystkie stacone życia
             a = ask_for_a_letter()
-            guessing(secret_word)
-            
+            guessing(secret_word)  
         # wy przypadku, gdy dlugosc slowa wybranego przez program nie jest podanemu przez nas
         #bedziemy wciaz pytani o slowo
         # while len(secret_word) != len(users_word):
@@ -176,11 +176,9 @@ def game_start():
         #konczymy dzialanie programu w przypadku podania quit - funkcja zwraca wtedy none == false
             if not a:
                 break
-        break
+        # break
     # lives = xxx
     # l = requests.get(f'http://artii.herokuapp.com/make?text={lives}')
-
-       
 
 if __name__ == "__main__":
     game_start()
