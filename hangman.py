@@ -28,9 +28,14 @@ def number_of_lives(difficulty_inp):
         
 
 def word_dashed(word_to_guess):
-    numbers_of_letter = len(word_to_guess)
-    dashed = ("_ " * numbers_of_letter)
-    return dashed
+    word_list = list(word_to_guess.strip(""))
+    word_list_two = []
+    for i in word_list:
+        if i.isalpha():
+            word_list_two.append(i.replace(i, "_")) 
+        else:
+            word_list_two.append(i)
+    return " ".join(word_list_two)
     
             
 # PART 1
