@@ -109,8 +109,12 @@ def ask_for_a_letter():
             print(eg.text)
             return None
         else:
-            print(f"Wrong you provied '{letter}'! You need to provide one letter!")
-            break
+            if len(letter) == 0:
+                print("You did not provide any letter!")
+                break
+            else:
+                print(f"Wrong you provied '{letter}'! You need to provide one letter!")
+                break
     
     
 
@@ -157,13 +161,13 @@ def game_start():
     print(r.text)
     difficulty = ask_for_difficulty_lvl() #pozniej mozna dodac, ze po zgadnieciu slowa znowu wybieramy poziom trudnosci
     secret_word = draw_a_word(difficulty)
+    lives = number_of_lives(difficulty)
     while True: 
         # ten zbior nie wiem czy tutaj, czy w osobnej funkcji
         #already_tried_letters = []
         #to podobnie
         #users_word = []
         
-        lives = number_of_lives(difficulty)
         dash = word_dashed(secret_word)
         while True: #pyta o literę a potem odpala funkcję guessing, która daną literkę wypisuje w haśle i potem pyta ponownie o literę / trzeba będzie przerwać gdy będzie całe hasło odgadnięte lub wszystkie stacone życia
             a = ask_for_a_letter()
