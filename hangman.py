@@ -161,7 +161,7 @@ def game_start():
                 guessed_letters.append(a)
 
             break
-        if guessed_letters == secret_list:
+        if set(guessed_letters) == set(secret_list):
             print("Congratulations! You win!")
             break
         print(guessed_letters)
