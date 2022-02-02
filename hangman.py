@@ -96,6 +96,8 @@ def ask_for_a_letter():
 def guessing(word_to_guess):
     word_list = list(word_to_guess.strip("").lower())
     word_list_encode = []
+    if word_list[-1]== " ":
+        word_list.pop()
     for i in word_list:
         if i in already_tried_letters or not i.isalpha():
             word_list_encode.append(i)
@@ -141,6 +143,9 @@ def game_start():
         a = ask_for_a_letter()
         guessing(secret_word)  
         secret_list = list(secret_word.strip("").lower())
+        if secret_list[-1]== " ":
+            secret_list.pop()
+        print(secret_list)
         while True:
             if a not in secret_list:
                 lives -= 1    
@@ -151,7 +156,10 @@ def game_start():
                 guessed_letters.append(a)
 
             break
-        
+        if guessed_letters == secret_list:
+            print("Congratulations! You win!")
+            break
+        print(guessed_letters)
         # wy przypadku, gdy dlugosc slowa wybranego przez program nie jest podanemu przez nas
         #bedziemy wciaz pytani o slowo
         # while len(secret_word) != len(users_word):
