@@ -68,7 +68,7 @@ already_tried_letters = []
 guessed_letters = []
 
 def ask_for_a_letter():
-    letter = input('Please provide a letter or type a quit if you want to exit: ')
+    letter = input('Please provide a letter or type a quit if you want to exit: ').lower()
     while True:
         if is_a_letter(letter):
             if letter in already_tried_letters: #sprawdza czy letter jest w zbiorze już użytych liter, jeśli tak to zwraca że już ją użyto
