@@ -146,9 +146,8 @@ def game_start():
         secret_list = list(secret_word.strip("").lower())
         if secret_list[-1]== " ":
             secret_list.pop()
-        print(secret_list)
         while True:
-            if a not in secret_list:
+            if a not in secret_list and is_a_letter(letter=True):
                 lives -= 1    
                 warning = "You missed! Left lives: "
                 l = requests.get(f'http://artii.herokuapp.com/make?text={warning}{lives}')
@@ -165,7 +164,6 @@ def game_start():
         if set(guessed_letters) == set(secret_list):
             print("Congratulations! You win!")
             break
-        print(guessed_letters)
         # wy przypadku, gdy dlugosc slowa wybranego przez program nie jest podanemu przez nas
         #bedziemy wciaz pytani o slowo
         # while len(secret_word) != len(users_word):
