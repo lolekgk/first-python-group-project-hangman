@@ -72,7 +72,8 @@ def ask_for_a_letter():
     while True:
         if is_a_letter(letter):
             if letter in already_tried_letters: #sprawdza czy letter jest w zbiorze już użytych liter, jeśli tak to zwraca że już ją użyto
-                print(f"You already used this letter: {letter}")
+                print(f"You already used {letter}.")
+                print("Already used letters: ", (" ".join(already_tried_letters)))
                 return letter
             else:
                 already_tried_letters.append(letter) # jeśli litery nie użyto wcześniej, dodaje ją do listy already_tried_letters i zwraca całą listę
