@@ -147,7 +147,7 @@ def game_start():
         if secret_list[-1]== " ":
             secret_list.pop()
         while True:
-            if a not in secret_list and is_a_letter(letter=True):
+            if a not in secret_list and is_a_letter(a) == True:
                 lives -= 1    
                 warning = "You missed! Left lives: "
                 l = requests.get(f'http://artii.herokuapp.com/make?text={warning}{lives}')
