@@ -149,10 +149,15 @@ def game_start():
         while True:
             if a not in secret_list:
                 lives -= 1    
+                warning = "You missed! Left lives: "
+                l = requests.get(f'http://artii.herokuapp.com/make?text={warning}{lives}')
+                print(l.text)
                 print(f"You missed! Left lives: {lives}")
                 break
-            elif a in secret_list:
-                print(f"You have left {lives} lives")
+            elif a in secret_list:  
+                warning = "You are correct! Left lives: "
+                l = requests.get(f'http://artii.herokuapp.com/make?text={warning}{lives}')
+                print(l.text)
                 guessed_letters.append(a)
 
             break
