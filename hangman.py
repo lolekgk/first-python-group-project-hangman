@@ -56,13 +56,14 @@ def is_a_letter(letter):
             return False
 
 
-def ask_for_a_letter(already_tried_letters):
+def ask_for_a_letter(already_tried_letters, doubled_letters):
     letter = input('Please provide a letter or type a quit if you want to exit: \n').lower()
     while True:
         if is_a_letter(letter):
             if letter in already_tried_letters: #sprawdza czy letter jest w zbiorze już użytych liter, jeśli tak to zwraca że już ją użyto
                 print("Already used letters: ", (" ".join(already_tried_letters)))
                 print(f"You already used {letter}.\n")
+                doubled_letters.append(letter)
                 return letter
             else:
                 already_tried_letters.append(letter) # jeśli litery nie użyto wcześniej, dodaje ją do listy already_tried_letters i zwraca całą listę
@@ -137,6 +138,7 @@ def game_start():
     print(r.text)
     already_tried_letters = []
     guessed_letters = []
+    doubled_letters = []
     difficulty = ask_for_difficulty_lvl() #pozniej mozna dodac, ze po zgadnieciu slowa znowu wybieramy poziom trudnosci   
     secret_word = draw_a_word(difficulty)
     # secret_word = "Test"
@@ -145,7 +147,7 @@ def game_start():
 #pyta o literę, a potem odpala funkcję guessing, która daną literkę wypisuje w haśle i potem pyta ponownie o literę 
 # / trzeba będzie przerwać gdy będzie całe hasło odgadnięte lub wszystkie stacone życia
     while True: 
-        a = ask_for_a_letter(already_tried_letters)
+        a = ask_for_a_letter(already_tried_letters, doubled_letters)
         guessing(secret_word, already_tried_letters)  
         secret_list = list(secret_word.strip("").lower()) #lista stworzona z oddzielonych liter zgadniętego słowa
         if a == 'end': #zakonczenie programu w przypadku wpisania quit
@@ -161,19 +163,25 @@ def game_start():
         # if secret_list[0]== " ":
         #     secret_list.pop(0)
         while True:
-            if a not in secret_list and is_a_letter(a) == True: # jezeli litera nie znajduje sie w liscie slowa do odgadniecia i litera jest literą pojedyncza
-                lives -= 1    
-                warning = "You missed! Left lives: "
-                l = requests.get(f'http://artii.herokuapp.com/make?text={warning}{lives}')
-                print(l.text)
-                print(f"You missed! Left lives: {lives}")
-                break
-            elif a in secret_list:  
-                warning = "You are correct! Left lives: "
-                l = requests.get(f'http://artii.herokuapp.com/make?text={warning}{lives}')
-                print(l.text)
-                guessed_letters.append(a)
-                break
+            if a not in secret_list and is_a_letter(a) == True:
+                if a not in doubled_letters:# jezeli litera nie znajduje sie w liscie slowa do odgadniecia i litera jest literą pojedyncza
+                    lives -= 1    
+                    warning = "You missed! Left lives: "
+                    l = requests.get(f'http://artii.herokuapp.com/make?text={warning}{lives}')
+                    print(l.text)
+                    print(f"You missed! Left lives: {lives}")
+                    break
+                else:
+                    break
+            elif a in secret_list:
+                if a not in doubled_letters: 
+                    warning = "You are correct! Left lives: "
+                    l = requests.get(f'http://artii.herokuapp.com/make?text={warning}{lives}')
+                    print(l.text)
+                    guessed_letters.append(a)
+                    break
+                else:
+                    break
             #break
         #tutaj mozna dodać warunek z rozpoczęciem gry po wygranej/przegranej
     
