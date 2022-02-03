@@ -33,7 +33,7 @@ def draw_a_word(difficulty_inp):
         result.append(x.split('|')[0])
    # w miejsce | wstawiany jest przecinek
     if difficulty_inp == "EASY":
-        word_to_guess = random.choice(result[19:21])
+        word_to_guess = random.choice(result[0:25])
         return word_to_guess
     elif difficulty_inp == "MEDIUM":
         word_to_guess = random.choice(result[:50])
@@ -66,6 +66,7 @@ def ask_for_a_letter(already_tried_letters, doubled_letters):
             else:
                 already_tried_letters.append(letter) # jeśli litery nie użyto wcześniej, dodaje ją do listy already_tried_letters i zwraca całą listę
                 print("\nAlready used letters:", (" ".join(already_tried_letters)))
+                print("\n")
                 break
         elif letter.upper() == 'QUIT':
             end_game = "See you soon!"
@@ -148,7 +149,6 @@ def game_start():
                     warning = "You missed! Left lives: "
                     l = requests.get(f'http://artii.herokuapp.com/make?text={warning}{lives}')
                     print(l.text)
-                    print(f"You missed! Left lives: {lives}")
                     break
                 else:
                     break
@@ -165,7 +165,7 @@ def game_start():
                 break
 
         if set(guessed_letters) == set(secret_list):
-            play_again = input("\nCongratulations! You win!\n Do you want to play again? [y/n]: ").lower()
+            play_again = input("\nCongratulations! You win!\nDo you want to play again? [y/n]: ").lower()
             if play_again == 'y':
                 game_start()
             else:
@@ -175,7 +175,7 @@ def game_start():
                 break
             
         elif lives == 0:
-            play_again = input("\nYou lost!\n Do you want to play again? [y/n]: ").lower()
+            play_again = input("\nYou lost!The word to guess is: {secret_word}\n Do you want to play again? [y/n]: ").lower()
             if play_again == 'y':
                 game_start()
             else:
