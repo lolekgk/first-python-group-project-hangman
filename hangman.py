@@ -146,8 +146,10 @@ def game_start():
     word_dashed(secret_word)
 #pyta o literę, a potem odpala funkcję guessing, która daną literkę wypisuje w haśle i potem pyta ponownie o literę 
 # / trzeba będzie przerwać gdy będzie całe hasło odgadnięte lub wszystkie stacone życia
-    while True: 
+    while True:
         a = ask_for_a_letter(already_tried_letters, doubled_letters)
+        if a == "end":
+            break
         guessing(secret_word, already_tried_letters)  
         secret_list = list(secret_word.strip("").lower()) #lista stworzona z oddzielonych liter zgadniętego słowa
         if a == 'end': #zakonczenie programu w przypadku wpisania quit
