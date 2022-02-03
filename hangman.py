@@ -60,7 +60,7 @@ def ask_for_a_letter(already_tried_letters, doubled_letters):
         if is_a_letter(letter):
             if letter in already_tried_letters: #sprawdza czy letter jest w zbiorze już użytych liter, jeśli tak to zwraca że już ją użyto
                 print("\nAlready used letters:", (" ".join(already_tried_letters)))
-                print(f"You already used {letter}.\n")
+                print(f"\nYou already used {letter}.\n")
                 doubled_letters.append(letter)
                 return letter
             else:
@@ -78,7 +78,7 @@ def ask_for_a_letter(already_tried_letters, doubled_letters):
                 print("You did not provide any letter!\n")
                 break
             else:
-                print(f"Wrong you provied '{letter}'! You need to provide one letter!\n")
+                print(f"\nWrong! You provied '{letter}'! You need to provide one letter!\n")
                 break
     return letter 
 
@@ -175,7 +175,7 @@ def game_start():
                 break
             
         elif lives == 0:
-            play_again = input("\nYou lost!The word to guess is: {secret_word}\n Do you want to play again? [y/n]: ").lower()
+            play_again = input(f"\nYou lost!The word to guess is: {secret_word}\n Do you want to play again? [y/n]: ").lower()
             if play_again == 'y':
                 game_start()
             else:
