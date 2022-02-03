@@ -13,15 +13,15 @@ def ask_for_difficulty_lvl():
 def number_of_lives(difficulty_inp):
     if difficulty_inp == "EASY":
         lives = 15
-        print(f"You choose EASY level with {lives} lives\n")
+        print(f"\nYou chose level {difficulty_inp} with {lives} lives.\n")
         return lives
     elif difficulty_inp == "MEDIUM":
         lives = 10
-        print(f"You choose MEDIUM level with {lives} lives\n")
+        print(f"\nYou chose {difficulty_inp} with {lives} lives.\n")
         return lives
     elif difficulty_inp == "HARD":
         lives = 5
-        print(f"You choose HARD level with {lives} lives\n")
+        print(f"\nYou chose level {difficulty_inp} with {lives} lives.\n")
         return lives
         
 
@@ -34,8 +34,6 @@ def draw_a_word(difficulty_inp):
    # w miejsce | wstawiany jest przecinek
     if difficulty_inp == "EASY":
         word_to_guess = random.choice(result[19:21])
-        #sprawdzenie slowa - usunac pozniej printa
-        print(word_to_guess)
         return word_to_guess
     elif difficulty_inp == "MEDIUM":
         word_to_guess = random.choice(result[:50])
@@ -57,17 +55,17 @@ def is_a_letter(letter):
 
 
 def ask_for_a_letter(already_tried_letters, doubled_letters):
-    letter = input('Please provide a letter or type a quit if you want to exit: ').lower()
+    letter = input('\nPlease provide a letter or type a quit if you want to exit: ').lower()
     while True:
         if is_a_letter(letter):
             if letter in already_tried_letters: #sprawdza czy letter jest w zbiorze już użytych liter, jeśli tak to zwraca że już ją użyto
-                print("Already used letters:", (" ".join(already_tried_letters)))
+                print("\nAlready used letters:", (" ".join(already_tried_letters)))
                 print(f"You already used {letter}.\n")
                 doubled_letters.append(letter)
                 return letter
             else:
                 already_tried_letters.append(letter) # jeśli litery nie użyto wcześniej, dodaje ją do listy already_tried_letters i zwraca całą listę
-                print("Already used letters:", (" ".join(already_tried_letters)))
+                print("\nAlready used letters:", (" ".join(already_tried_letters)))
                 break
         elif letter.upper() == 'QUIT':
             end_game = "See you soon!"
@@ -102,15 +100,15 @@ def word_dashed(word_to_guess):
 def guessing(word_to_guess, already_tried_letters):
     word_list = list(word_to_guess.strip(""))
     word_list_encode = []
-    a = ''.join(already_tried_letters)
-    b = a.upper()
-    c = list(b)
+    tried_letters = ''.join(already_tried_letters)
+    upper_tried_letters = tried_letters.upper()
+    already_tried_letters_upper = list(upper_tried_letters)
     if word_list[-1]== " ":
         word_list.pop()
     for i in word_list:
         if i in already_tried_letters or not i.isalpha():
             word_list_encode.append(i) #zostaje to co jest, gdy i nie jest literą, lub jest w uzytym zbiorze
-        elif i in c:
+        elif i in already_tried_letters_upper:
             word_list_encode.append(i) #w przeciwnym razie zwracany jest uzupelniony
         else:
             word_list_encode.append(i.replace(i, "_"))
@@ -126,7 +124,6 @@ def game_start():
     doubled_letters = []
     difficulty = ask_for_difficulty_lvl() #pozniej mozna dodac, ze po zgadnieciu slowa znowu wybieramy poziom trudnosci   
     secret_word = draw_a_word(difficulty)
-    # secret_word = "Test"
     lives = number_of_lives(difficulty)
     word_dashed(secret_word)
 #pyta o literę, a potem odpala funkcję guessing, która daną literkę wypisuje w haśle i potem pyta ponownie o literę 
@@ -166,15 +163,26 @@ def game_start():
                     break
             else:
                 break
-           
-        #tutaj mozna dodać warunek z rozpoczęciem gry po wygranej/przegranej
 
         if set(guessed_letters) == set(secret_list):
-            print("Congratulations! You win!\n")
-            break
+            play_again = input("\nCongratulations! You win!\n Do you want to play again? [y/n]: ").lower()
+            if play_again == 'y':
+                game_start()
+            else:
+                end_game = "See you soon!"
+                eg = requests.get(f'http://artii.herokuapp.com/make?text={end_game}')
+                print(eg.text)
+                break
+            
         elif lives == 0:
-            print("You lost!\n")
-            break
+            play_again = input("\nYou lost!\n Do you want to play again? [y/n]: ").lower()
+            if play_again == 'y':
+                game_start()
+            else:
+                end_game = "See you soon!"
+                eg = requests.get(f'http://artii.herokuapp.com/make?text={end_game}')
+                print(eg.text)
+                break
 
 
 if __name__ == "__main__":
