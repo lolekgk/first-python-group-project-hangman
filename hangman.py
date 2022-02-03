@@ -25,7 +25,6 @@ def number_of_lives(difficulty_inp):
         return lives
         
 
-
 def draw_a_word(difficulty_inp):
     f = open("countries-and-capitals.txt", "r")
     lines = f.readlines()
@@ -45,29 +44,30 @@ def draw_a_word(difficulty_inp):
         word_to_guess = random.choice(result)
         return word_to_guess
 
+
 def is_a_letter(letter):
     try: 
         int(letter)
         return False
     except ValueError:
-        if len(letter) == 1:
+        if len(letter) == 1 and letter.isalpha() == True:
             return True
         else:
             return False
 
 
 def ask_for_a_letter(already_tried_letters, doubled_letters):
-    letter = input('Please provide a letter or type a quit if you want to exit: \n').lower()
+    letter = input('Please provide a letter or type a quit if you want to exit: ').lower()
     while True:
         if is_a_letter(letter):
             if letter in already_tried_letters: #sprawdza czy letter jest w zbiorze już użytych liter, jeśli tak to zwraca że już ją użyto
-                print("Already used letters: ", (" ".join(already_tried_letters)))
+                print("Already used letters:", (" ".join(already_tried_letters)))
                 print(f"You already used {letter}.\n")
                 doubled_letters.append(letter)
                 return letter
             else:
                 already_tried_letters.append(letter) # jeśli litery nie użyto wcześniej, dodaje ją do listy already_tried_letters i zwraca całą listę
-                print("Already used letters: \n", (" ".join(already_tried_letters)))
+                print("Already used letters:", (" ".join(already_tried_letters)))
                 break
         elif letter.upper() == 'QUIT':
             end_game = "See you soon!"
@@ -100,36 +100,21 @@ def word_dashed(word_to_guess):
 
 # podmienia podlogi na odgadniete litery
 def guessing(word_to_guess, already_tried_letters):
-    word_list = list(word_to_guess.strip("").lower())
+    word_list = list(word_to_guess.strip(""))
     word_list_encode = []
+    a = ''.join(already_tried_letters)
+    b = a.upper()
+    c = list(b)
     if word_list[-1]== " ":
         word_list.pop()
     for i in word_list:
         if i in already_tried_letters or not i.isalpha():
             word_list_encode.append(i) #zostaje to co jest, gdy i nie jest literą, lub jest w uzytym zbiorze
+        elif i in c:
+            word_list_encode.append(i) #w przeciwnym razie zwracany jest uzupelniony
         else:
-            word_list_encode.append(i.replace(i, "_")) #w przeciwnym razie zwracany jest uzupelniony
+            word_list_encode.append(i.replace(i, "_"))
     return print(" ".join(word_list_encode))
-
-# STEP 6
-# if the letter is present in the word iterate through all the letters in the variable
-# word_to_guess. If that letter is present in the already_tried_letters then display it,
-# otherwise display "_".
-
-
-# if the letter is not present in the word decrease the value in the lives variable
-# and display a hangman ASCII art. You can search the Internet for "hangman ASCII art",
-# or draw a new beautiful one on your own.
-
-
-
-# STEP 7
-# check if the variable already_tried_letters already contains all the letters necessary
-# to build the value in the variable word_to_guess. If so display a winning message and exit
-# the app.
-# If you still have letters that are not guessed check if you have a non negative amount of lives
-# left. If not print a loosing message and exit the app.
-# If neither of the 2 conditions mentioned above go back to STEP 4
 
 
 def game_start():  
@@ -150,20 +135,15 @@ def game_start():
         a = ask_for_a_letter(already_tried_letters, doubled_letters)
         if a == "end":
             break
+
         guessing(secret_word, already_tried_letters)  
         secret_list = list(secret_word.strip("").lower()) #lista stworzona z oddzielonych liter zgadniętego słowa
-        if a == 'end': #zakonczenie programu w przypadku wpisania quit
-            break
         secret_list.sort()
-
         for x in secret_list:
             secret_list.pop(0)
             if secret_list[0] != ' ':
                 break
-        # if secret_list[0]== " ":
-        #     secret_list.pop(0)
-        # if secret_list[0]== " ":
-        #     secret_list.pop(0)
+
         while True:
             if a not in secret_list and is_a_letter(a) == True:
                 if a not in doubled_letters:# jezeli litera nie znajduje sie w liscie slowa do odgadniecia i litera jest literą pojedyncza
@@ -184,9 +164,11 @@ def game_start():
                     break
                 else:
                     break
-            #break
+            else:
+                break
+           
         #tutaj mozna dodać warunek z rozpoczęciem gry po wygranej/przegranej
-    
+
         if set(guessed_letters) == set(secret_list):
             print("Congratulations! You win!\n")
             break
