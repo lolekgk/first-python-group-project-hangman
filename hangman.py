@@ -175,7 +175,7 @@ def game_start():
                 break
             
         elif lives == 0:
-            play_again = input(f"\nYou lost!The word to guess is: {secret_word}\n Do you want to play again? [y/n]: ").lower()
+            play_again = input(f"\nYou lost!The word to guess was: {secret_word}\n Do you want to play again? [y/n]: ").lower()
             if play_again == 'y':
                 game_start()
             else:
